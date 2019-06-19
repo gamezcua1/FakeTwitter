@@ -4,6 +4,7 @@ import firebase from 'firebase';
 
 import NuevoTweet from './NuevoTweet';
 import Tweet from './Tweet';
+import NiceModal from './NiceModal';
 
 class App extends Component {
 	state = {
@@ -30,7 +31,9 @@ class App extends Component {
 			<div className="App">
 				<Row type="flex" justify="center">
 					<Col span={8}>
-						<NuevoTweet subirTweet={this.subirTweet} />
+						<NiceModal titulo="What's up?" botonTitulo="Escribir Tweet">
+							<NuevoTweet subirTweet={this.subirTweet}/>
+						</NiceModal>
 					</Col>
 					<Col span={8}>
 						{Object.keys(this.state.tweets).map((tweetKey, i) => (

@@ -6,6 +6,7 @@ const NuevoTweet = (props) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		props.subirTweet(contenido);
+		props.cerrarModal();
 		setContenido("");
 	}
 

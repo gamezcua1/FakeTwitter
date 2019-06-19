@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd';
+import firebase from 'firebase';
 
 import NuevoTweet from './NuevoTweet';
 import Tweet from './Tweet';
 
 class App extends Component {
 	state = {
-		tweets: []
+		tweets: {}
 	};
 
-	subirTweet = (nuevoTweet) => {
-		const { tweets } = this.state;
+	componentDidMount() {
+		firebase.database().ref('/tweets').on('value', (snapshot) => {
+			this.setState({
+				tweets: snapshot.val()
+			});
+		});
+	}
 
-		this.setState({
-			tweets: [ ...tweets, nuevoTweet ]
+	subirTweet = (nuevoTweet) => {
+		firebase.database().ref('/tweets').push({
+			contenido: nuevoTweet,
+			fecha: Date.now()
 		});
 	};
 
@@ -24,7 +32,11 @@ class App extends Component {
 					<Col span={8}>
 						<NuevoTweet subirTweet={this.subirTweet} />
 					</Col>
-					<Col span={8}>{this.state.tweets.map((tweet, i) => <Tweet contenido={tweet} key={i} />)}</Col>
+					<Col span={8}>
+						{Object.keys(this.state.tweets).map((tweetKey, i) => (
+							<Tweet tweet={this.state.tweets[tweetKey]} key={tweetKey} />
+						))}
+					</Col>
 				</Row>
 			</div>
 		);

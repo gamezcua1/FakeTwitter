@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from './Button';
 
 const NuevoTweet = (props) => {
 	const [ contenido, setContenido ] = useState('');
@@ -14,9 +15,11 @@ const NuevoTweet = (props) => {
 		<div>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="contenido">
-					Escribe un nuevo tweet!
+					Escribe un nuevo tweet! 
+					{' '}
 					<input id="contenido" value={contenido} onChange={(e) => setContenido(e.target.value)} />
-					<button disabled={contenido === '' && contenido.length >= 255}>Tweet</button>
+					{' '}
+					<Button disabled={contenido === '' && contenido.length >= 255}>Tweet</Button>
 				</label>
 			</form>
 		</div>

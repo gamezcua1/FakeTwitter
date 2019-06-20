@@ -5,10 +5,13 @@ import firebase from 'firebase';
 import NuevoTweet from './NuevoTweet';
 import Tweet from './Tweet';
 import NiceModal from './NiceModal';
+import { ThemeProvider } from './Providers';
+import Button from "./Button";
 
 class App extends Component {
 	state = {
-		tweets: {}
+		tweets: {},
+		theme: "blue"
 	};
 
 	componentDidMount() {
@@ -26,12 +29,19 @@ class App extends Component {
 		});
 	};
 
+	toggleTheme = () => {
+		this.setState({
+			theme: this.state.theme === "blue" ? "red" : "blue"
+		})
+	}
+
 	render() {
 		return (
-			<div className="App">
+			<ThemeProvider theme={{primaryColor: this.state.theme}}>
 				<Row type="flex" justify="center">
 					<Col span={8}>
-						<NiceModal titulo="What's up?" botonTitulo="Escribir Tweet">
+						<button onClick={this.toggleTheme}>Cambiar a tema {this.state.theme === "blue" ? "red" : "blue"}</button>
+						<NiceModal button={<Button>Escribir nuevo tweet</Button>}>
 							<NuevoTweet subirTweet={this.subirTweet}/>
 						</NiceModal>
 					</Col>
@@ -41,7 +51,7 @@ class App extends Component {
 						))}
 					</Col>
 				</Row>
-			</div>
+			</ThemeProvider>
 		);
 	}
 }

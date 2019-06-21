@@ -17,7 +17,7 @@ class App extends Component {
 	componentDidMount() {
 		firebase.database().ref('/tweets').on('value', (snapshot) => {
 			this.setState({
-				tweets: snapshot.val()
+				tweets: snapshot.val() || {}
 			});
 		});
 	}
@@ -28,6 +28,10 @@ class App extends Component {
 			fecha: Date.now()
 		});
 	};
+
+	eliminarTweet = (tweetKey) => {
+		firebase.database().ref(`/tweets/${tweetKey}`).remove();
+	}
 
 	toggleTheme = () => {
 		this.setState({
@@ -47,7 +51,7 @@ class App extends Component {
 					</Col>
 					<Col span={8}>
 						{Object.keys(this.state.tweets).map((tweetKey, i) => (
-							<Tweet tweet={this.state.tweets[tweetKey]} key={tweetKey} />
+							<Tweet tweetKey={tweetKey} tweet={this.state.tweets[tweetKey]} key={tweetKey} eliminarTweet={this.eliminarTweet}/>
 						))}
 					</Col>
 				</Row>

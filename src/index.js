@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
 import firebase from 'firebase';
 import moment from 'moment';
 import 'moment/locale/es';
+import Routes from './routes';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCz_dXRvkdTRhUqrTJ8oB8vFnYMA5Um9-Y',
@@ -20,7 +20,7 @@ firebase.initializeApp(firebaseConfig);
 moment.locale('es');
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Routes />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
